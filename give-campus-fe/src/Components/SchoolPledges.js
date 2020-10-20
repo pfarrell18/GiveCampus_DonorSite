@@ -1,6 +1,6 @@
 import React from "react"
 
-const SchoolPledge = () => {
+const SchoolPledges = () => {
 
     return(
         <div>
@@ -10,4 +10,4 @@ const SchoolPledge = () => {
 }
 
 
-export default SchoolPledge
+export default SchoolPledges
