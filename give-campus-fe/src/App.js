@@ -1,26 +1,31 @@
 import React from 'react';
-import logo from './logo.svg';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect
+} from "react-router-dom";
 import './App.css';
+
+//Compontents
+import Nav from "./Components/Nav"
+import Donation from "./Components/Donation"
+import Pledge from "./Components/Pledge"
+import SchoolPledge from "./Components/SchoolPledge"
+import SinglePledge from "./Components/SinglePledge"
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  <Router>
+    <Nav/>
+    <Switch>
+      <Route path="/donate" component ={Donation}/>
+      <Route path="/pledge" component ={Pledge}/>
+      <Route path="/schoolpledge" component ={SchoolPledge}/>
+      <Route path="/singlepledge" component ={SinglePledge}/>
+    </Switch>
+  </Router>
+  )
 }
 
 export default App;
