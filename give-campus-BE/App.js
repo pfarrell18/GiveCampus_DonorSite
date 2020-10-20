@@ -16,6 +16,7 @@ app.use(express.urlencoded({extended: true}))
 
 
 app.post("/donation", async(req, res) => {
+  console.log("donation", req.body)
   let insertion = await db.none(
     `INSERT INTO donations (email, amount, institution, date) VALUES ($1, $2, $3, $4)`,
     [req.body.donor_email, req.body.donation_amount, req.body.institution, req.body.date]
@@ -35,7 +36,7 @@ app.post("/findschoolpledges", async(req, res) => {
   console.log(req.body)
   
   let pledges = await db.manyOrNone(
-    `SELECT name, institution, match_amount, divisor, start_date, end_date, donor_based FROM pledges where institution= '${req.body.institution}'`
+    `SELECT name, institution, match_amount, divisor, start_date, end_date, donor_based, cap FROM pledges where institution= '${req.body.institution}'`
   );
 
  for (pledge of pledges){
@@ -49,12 +50,11 @@ app.post("/findschoolpledges", async(req, res) => {
   res.send(pledges)
 })
 
-app.post("/getdonations", async(req, res) => {
-  console.log(req.body)
+app.post("/getdonation", async(req, res) => {
   let donations = await db.manyOrNone(
     `SELECT * FROM donations where date between '${req.body.start_date}' and '${req.body.end_date}' and institution = '${req.body.institution}'`
   );
-  
+  console.log(donations)
   res.send(donations)
 })
 
