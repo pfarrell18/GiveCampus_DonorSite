@@ -1,5 +1,6 @@
 .gc-logo{
     height: 40px;
+    padding-top: 5px;
 }
 
 .title{
@@ -16,3 +17,20 @@
     padding: 10px
 }
 
+.card{
+    width: 150px;
+    background-color: ivory;
+    padding: 5px;
+    margin: 5px
+}
+
+.expired{
+    width: 150px;
+   opacity: 50%;
+}
+
+.card-container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}

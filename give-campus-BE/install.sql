@@ -1,7 +1,6 @@
-
-create table institutions(
+ create table institutions(
     id SERIAL PRIMARY KEY,
-    name TEXT,
+    email TEXT,
     institution TEXT,
     city VARCHAR,
     state VARCHAR
@@ -18,8 +17,8 @@ create table users(
 
 create table donations(
     id serial primary key,
-    user INTEGER REFERENCES users(id),
-    name TEXT,
+    user_id INTEGER REFERENCES users (id),
+    email TEXT,
     amount DECIMAL,
     institution TEXT,
     date DATE
@@ -27,7 +26,8 @@ create table donations(
 
 create table pledges(
     id SERIAL PRIMARY KEY,
-    user INTEGER REFERENCES users(id),
+    user_id INTEGER REFERENCES users(id),
+    email TEXT,
     name TEXT,
     institution TEXT,
     match_amount DECIMAL,

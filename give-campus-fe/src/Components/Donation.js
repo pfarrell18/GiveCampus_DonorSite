@@ -1,9 +1,9 @@
 import React, { useState } from "react"
-
+import {Redirect} from "react-router-dom"
 
 const Donation = () => {
     const [formData, setFormData] = useState({})
-    const [donate, setDonated] = useState({undefined})
+    const [donated, setDonated] = useState(undefined)
 
     const handleChange = (evt) => {
         setFormData({ ...formData, [evt.target.id]: evt.target.value })
@@ -13,18 +13,21 @@ const Donation = () => {
         evt.preventDefault();
         const settings = {
             method: 'POST',
-            body: JSON.stringify(formData),
+            body: JSON.stringify({...formData, ["date"]:new Date()}),
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
             }
         };
         const fetchResponse = await fetch("/donation", settings)
-        const data = fetchResponse.json()
+        setDonated(true)
+        // const data = fetchResponse.json()
     }
 
+    
     return (
         <div className="container">
+            {donated && <Redirect to="/"/>}
             <h1 className="title">Donate</h1>
             <form className="donation-form" onSubmit={handleSubmit}>
                 <div className="field">
