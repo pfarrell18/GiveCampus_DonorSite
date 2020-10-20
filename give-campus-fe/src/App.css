@@ -1,0 +1,18 @@
+.gc-logo{
+    height: 40px;
+}
+
+.title{
+    text-align: center;
+}
+
+.container, .donation-form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;  
+}
+
+.donation-form{
+    padding: 10px
+}
+

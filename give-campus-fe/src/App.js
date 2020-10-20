@@ -11,7 +11,7 @@ import './App.css';
 import Nav from "./Components/Nav"
 import Donation from "./Components/Donation"
 import Pledge from "./Components/Pledge"
-import SchoolPledge from "./Components/SchoolPledge"
+import SchoolPledges from "./Components/SchoolPledges"
 import SinglePledge from "./Components/SinglePledge"
 
 function App() {
@@ -21,7 +21,7 @@ function App() {
     <Switch>
       <Route path="/donate" component ={Donation}/>
       <Route path="/pledge" component ={Pledge}/>
-      <Route path="/schoolpledge" component ={SchoolPledge}/>
+      <Route path="/schoolpledges" component ={SchoolPledges}/>
       <Route path="/singlepledge" component ={SinglePledge}/>
     </Switch>
   </Router>
