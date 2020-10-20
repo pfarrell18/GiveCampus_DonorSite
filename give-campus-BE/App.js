@@ -17,40 +17,36 @@ app.use(express.urlencoded({extended: true}))
 
 app.post("/donation", async(req, res) => {
   let insertion = await db.none(
-    `INSERT INTO donations (name, amount, institution, date) VALUES ($1, $2, $3, $4)`,
-    [req.body.name, req.body.donation_amount, req.body.institution, req.body.date]
+    `INSERT INTO donations (email, amount, institution, date) VALUES ($1, $2, $3, $4)`,
+    [req.body.donor_email, req.body.donation_amount, req.body.institution, req.body.date]
   );
 });
 
-app.post("/dollarpledge", async(req, res) => {
-  console.log(req.body)
-  let insertion = await db.none(
-    `INSERT INTO dollarBasedPledge (name, institution, match_amount, donor_amount, cap, start_date, end_date) VALUES ($1, $2, $3, $4, $5, $6, $7)`,
-    [req.body.name, req.body.institution, req.body.match_amount, req.body.donor_amount, req.body.cap, req.body.start_date, req.body.end_date]
-  );
-});
 
-app.post("/donorpledge", async(req, res) => {
+app.post("/pledge", async(req, res) => {
   console.log(req.body)
   let insertion = await db.none(
-    `INSERT INTO donorBasedPledge (name, institution, match_amount, donor_number, cap, start_date, end_date) VALUES ($1, $2, $3, $4, $5, $6, $7)`,
-    [req.body.name, req.body.institution, req.body.match_amount, req.body.donor_number, req.body.cap, req.body.start_date, req.body.end_date]
+    `INSERT INTO pledges (name, email, institution, match_amount, divisor, cap, start_date, end_date, donor_based, date) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)`,
+    [req.body.name, req.body.email, req.body.institution, req.body.match_amount, req.body.divisor, req.body.cap, req.body.start_date, req.body.end_date, req.body.donor_based, req.body.date]
   );
 });
 
 app.post("/findschoolpledges", async(req, res) => {
   console.log(req.body)
   
-  let donorBasedPledges = await db.manyOrNone(
-    `SELECT * FROM donorBasedPledge where institution= '${req.body.institution}'`
-  );
-  let dollarBasedPledges = await db.manyOrNone(
-    `SELECT * FROM dollarBasedPledge where institution= '${req.body.institution}'`
+  let pledges = await db.manyOrNone(
+    `SELECT name, institution, match_amount, divisor, start_date, end_date, donor_based FROM pledges where institution= '${req.body.institution}'`
   );
 
-  let all_pledges = donorBasedPledges.concat(dollarBasedPledges)
+ for (pledge of pledges){
+  if (new Date(pledge.end_date) > new Date()){
+    pledge["expired"]=false
+  }else{
+    pledge["expired"]=true
+  }
+ }
 
-  res.send(all_pledges)
+  res.send(pledges)
 })
 
 app.post("/getdonations", async(req, res) => {

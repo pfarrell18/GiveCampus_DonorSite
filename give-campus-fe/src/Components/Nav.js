@@ -11,7 +11,7 @@ const Nav = () => {
                 </div>
                     <Link className="navbar-item" to="/donate">Donate</Link>
                     <Link className="navbar-item" to="/pledge">Pledge</Link>
-                    <Link className="navbar-item" to="/schoolpledge">School Pledges</Link>
+                    <Link className="navbar-item" to="/schoolpledges">School Pledges</Link>
             </nav>
         </React.Fragment>
     )
