@@ -12,6 +12,7 @@ import Donation from "./Components/Donation"
 import Pledge from "./Components/Pledge"
 import SchoolPledges from "./Components/SchoolPledges"
 import SinglePledge from "./Components/SinglePledge"
+import CountrySelect from './Components/AutoComplete';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
       <Route path="/pledge" component ={Pledge}/>
       <Route path="/schoolpledges" component ={SchoolPledges}/>
       <Route path="/singlepledge" component ={SinglePledge}/>
+      <Route path="/autocomplete" component ={CountrySelect}/>
     </Switch>
   </Router>
   )

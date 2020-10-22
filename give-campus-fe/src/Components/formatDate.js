@@ -1,9 +1,8 @@
-import React, { useState } from "react"
+import React from "react"
 
 const FormatDate = ({ date }) => {
  
     const formatDate = (date) => {
-        console.log(date.split(""))
         let split = date.split("")
 
         if (split[5] === "0") {
