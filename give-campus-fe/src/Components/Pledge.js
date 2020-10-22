@@ -1,32 +1,40 @@
 import React, { useState } from "react"
-import { Redirect } from "react-router-dom"
+import InstitutionSelect from "./AutoComplete"
 
 const Pledge = () => {
     const [formData, setFormData] = useState({})
-    const [donorbased, setDonorBased] = useState(true)
+    const [pledged, setPledged] = useState(undefined)
+    const [institutionValue, setInstitutionValue] = useState([])
 
     const handleChange = (evt) => {
         setFormData({ ...formData, [evt.target.id]: evt.target.value })
     }
 
     const handleSubmit = async (evt) => {
-        
         evt.preventDefault();
+        if (institutionValue.length === 0) {
+            alert("Please select institution")
+            return
+        }
         const settings = {
             method: 'POST',
-            body: JSON.stringify({ ...formData, date: new Date()}),
+            body: JSON.stringify({ ...formData,institution_id: institutionValue.id, date: new Date() }),
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
             }
         };
         const fetchResponse = await fetch("/pledge", settings)
+        const data = await fetchResponse.json()
+        setPledged(data)
     }
 
 
     return (
         <div className="container">
-            <h1 className="title">Create Pledge</h1>
+            {pledged && <div className="subtitle header">{`Congrats, You pledged to ${institutionValue.institution}!`}</div>}
+            {!pledged &&
+            <React.Fragment><h1 className="title">Create Pledge</h1>
             <form className="donation-form" onSubmit={handleSubmit}>
                 <div className="field">
                     <label className="label">Pledge Name</label>
@@ -41,10 +49,12 @@ const Pledge = () => {
                     </div>
                 </div>
 
+                
                 <div className="field">
                     <label className="label">Institution</label>
                     <div className="control">
-                        <input className="input" type="text" id="institution" placeholder="Enter Institution" onChange={handleChange} required />
+                        <InstitutionSelect value={institutionValue} setValue={setInstitutionValue} />
+                        {/* <input className="input" type="text" id="institution" placeholder="Enter Institution" onChange={handleChange} required /> */}
                     </div>
                 </div>
 
@@ -53,11 +63,11 @@ const Pledge = () => {
                     <p className="control is-expanded">
                         <input className="input" type="number" id="match_amount" placeholder="20.00" min="1.00" max="10000.00" step="0.01" onChange={handleChange} required />
                     </p>
-                    <p className="control">
-                        <a className="button is-static">
+                    <div className="control">
+                        <p className="button is-static">
                             dollars
-                    </a>
                     </p>
+                    </div>
                 </div>
 
                 <label className="label">Per </label>
@@ -79,21 +89,21 @@ const Pledge = () => {
                     <p className="control is-expanded">
                         <input className="input" type="number" id="cap" placeholder="100.00" min="1.00" max="10000.00" step="0.01" onChange={handleChange} required />
                     </p>
-                    <p className="control">
-                        <a className="button is-static">
+                    <div className="control">
+                        <p className="button is-static">
                             dollars
-                    </a>
                     </p>
+                    </div>
                 </div>
                 <div className="field is-grouped">
-                    
+
                     <div className="control is-expanded">
                         <label className="label">Start Date</label>
-                        <input className="input" type="date" id="start_date" onChange={handleChange} required/>
+                        <input className="input" type="date" id="start_date" onChange={handleChange} required />
                     </div>
                     <div className="control is-expanded">
                         <label className="label">End Date</label>
-                        <input className="input" type="date" id="end_date" onChange={handleChange} required/>
+                        <input className="input" type="date" id="end_date" onChange={handleChange} required />
                     </div>
                 </div>
                 <div className="field is-grouped is-grouped-right">
@@ -105,6 +115,7 @@ const Pledge = () => {
                     </div>
                 </div>
             </form >
+            </React.Fragment>}
         </div >
     )
 }
